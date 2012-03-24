@@ -1,5 +1,6 @@
 <h1>Top#index</h1>
 
+<% unless current_user.blank? %>
 <%= form_for :tweet, url: { action: 'create' } do |f| %>
   <div class="field">
     <%= f.text_field :post, size: "50" %>
@@ -9,7 +10,6 @@
 
 <br />
 
-<% unless current_user.blank? %>
 <table>
   <% @tweets.each do |tweet| %>
     <tr>
