@@ -1,0 +1,22 @@
+<h1>Top#index</h1>
+
+<%= form_for :tweet, url: { action: 'create' } do |f| %>
+  <div class="field">
+    <%= f.text_field :post, size: "50" %>
+    <%= f.submit "POST" %>
+  </div>
+<% end %>
+
+<br />
+
+<% unless current_user.blank? %>
+<table>
+  <% @tweets.each do |tweet| %>
+    <tr>
+      <td align="center"><%= link_to_unless( tweet.user.try(:screen_name).blank?, image_tag( tweet.user.try(:image), size: "20x20" ), "https://twitter.com/#!/#{tweet.user.try(:screen_name)}", target: "_blank" ) %></td>
+      <td><%= tweet.post %></td>
+      <td><% if session[:user_id] == tweet.user_id %><%= link_to "Delete", { action: 'delete', id: tweet.id }, onClick: "return confirm('「#{tweet.post}」を削除します。よろしいですか？');" %><% end %></td>
+    </tr>
+  <% end %>
+</table>
+<% end %>
